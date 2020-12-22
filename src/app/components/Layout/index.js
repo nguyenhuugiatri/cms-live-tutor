@@ -1,3 +1,5 @@
-import { Layout } from 'antd';
+import { StyledLayout } from './styles';
 
-export default Layout;
+import { StyledHeader } from './styles';
+StyledLayout.StyledHeader = StyledHeader;
+export default StyledLayout;

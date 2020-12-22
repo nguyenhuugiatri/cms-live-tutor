@@ -5,7 +5,7 @@ import { StyledDashboard } from './styles';
 const Dashboard = props => {
   return (
     <CommonLayout>
-      <StyledDashboard>Hello World!</StyledDashboard>
+      <StyledDashboard></StyledDashboard>
     </CommonLayout>
   );
 };

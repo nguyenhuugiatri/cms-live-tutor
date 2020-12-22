@@ -11,7 +11,6 @@ export const App = () => {
         <meta name="description" content="A React application" />
       </Helmet>
       <Switch>
-        //TODO
         {/* <Route path="/notfound" component={NotFoundPage} /> */}
         <Route component={AppLayout} />
       </Switch>

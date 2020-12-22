@@ -5,9 +5,8 @@ html,body{
   height:100%;
   width:100%;
 }
-
 body{
-  font-family:'Lato',sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 #root{
