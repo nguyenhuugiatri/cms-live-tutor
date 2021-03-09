@@ -6,9 +6,14 @@ import useTable from 'hooks/useTable';
 import Status from 'app/components/Status';
 import { ACTION_STATUS } from 'utils/constants';
 import Popconfirm from 'app/components/Popconfirm';
+import { StyledStatus } from './styles';
 import moment from 'moment';
 
-export const MainTable = ({ dataSource, handleBlock }) => {
+export const MainTable = ({
+  dataSource,
+  handleDenyTutor,
+  handleAcceptTutor,
+}) => {
   const [form] = Form.useForm();
   const { EditableCell, data, search, onChange } = useTable({
     form,
@@ -48,18 +53,24 @@ export const MainTable = ({ dataSource, handleBlock }) => {
       dataIndex: 'isBlocked',
       render: (_, record) => {
         return (
-          <Popconfirm
-            title={`Do you want to ${
-              !!record?.isBlocked ? 'Unblock' : 'Block'
-            } this user`}
-            onConfirm={() =>
-              handleBlock({ ...record, type: record?.isBlocked })
-            }
-          >
-            <Button size="small" type="danger">
-              {record?.isBlocked ? 'Unblock' : 'Block'}
-            </Button>
-          </Popconfirm>
+          <StyledStatus>
+            <Popconfirm
+              title={`Do you want to deny this user become tutor`}
+              onConfirm={() => handleDenyTutor({ ...record })}
+            >
+              <Button size="small" type="danger">
+                Deny
+              </Button>
+            </Popconfirm>
+            <Popconfirm
+              title={`Do you want to approve this user become tutor`}
+              onConfirm={() => handleAcceptTutor({ ...record })}
+            >
+              <Button size="small" type="primary">
+                Accept
+              </Button>
+            </Popconfirm>
+          </StyledStatus>
         );
       },
     },

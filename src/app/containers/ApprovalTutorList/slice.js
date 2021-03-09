@@ -9,6 +9,11 @@ export const initialState = {
     error: null,
     status: '',
   },
+  updateTutor: {
+    data: [],
+    error: null,
+    status: '',
+  },
 };
 const waitingListSlice = createSlice({
   name: 'waitingList',
@@ -32,17 +37,24 @@ const waitingListSlice = createSlice({
         set('waitingList.status', ACTION_STATUS.FAILED),
       )(state);
     },
-    handleOpenModal(state) {
-      return flow(set('error', null))(state);
-    },
-    openModal(state, action) {
+
+    updateTutor(state) {
       return flow(
-        set('currentUser', action.payload),
-        set('visible', true),
+        set('updateTutor.error', null),
+        set('updateTutor.status', ACTION_STATUS.PENDING),
       )(state);
     },
-    closeModal(state) {
-      return flow(set('visible', false))(state);
+    updateTutorSuccess(state, action) {
+      return flow(
+        set('updateTutor.data', action.payload),
+        set('updateTutor.status', ACTION_STATUS.SUCCESS),
+      )(state);
+    },
+    updateTutorFalied(state, action) {
+      return flow(
+        set('updateTutor.error', action.payload),
+        set('updateTutor.status', ACTION_STATUS.FAILED),
+      )(state);
     },
   },
 });

@@ -10,3 +10,14 @@ export const getListWaitingApproval = payload => {
     .then(({ data }) => ({ response: data }))
     .catch(handleGeneralError);
 };
+
+export const updateTutor = payload => {
+  return request(WEB_API, {
+    url: `tutor/update/approval`,
+    method: 'PUT',
+    data: payload,
+  })
+    .then(response => response.data)
+    .then(({ data }) => ({ response: data }))
+    .catch(handleGeneralError);
+};

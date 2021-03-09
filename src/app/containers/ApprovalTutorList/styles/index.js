@@ -8,3 +8,10 @@ export const StyledLayout = styled.div`
   overflow-y: scroll;
   flex-direction: column;
 `;
+
+export const StyledStatus = styled.div`
+  display: flex;
+  > button {
+    margin-right: 5px;
+  }
+`;

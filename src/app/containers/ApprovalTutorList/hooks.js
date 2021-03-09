@@ -2,29 +2,45 @@ import useActions from 'hooks/useActions';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { actions } from './slice';
-import { makeSelectWaitingList } from './selectors';
+import { makeSelectWaitingList, makeSelectUpdateTutor } from './selectors';
 export const useHooks = () => {
-  const { getWaitingList } = useActions(
-    { getWaitingList: actions.getWaitingList },
+  const { getWaitingList, updateTutor } = useActions(
+    {
+      getWaitingList: actions.getWaitingList,
+      updateTutor: actions.updateTutor,
+    },
     [actions],
   );
-  const waitingList = useSelector(makeSelectWaitingList);
-  const handleBlock = ({ id, type }) => {
-    // if (type) {
-    //   updateRecord({ id, isBlocked: false });
-    // } else {
-    //   updateRecord({ id, isBlocked: true });
-    // }
+  const waitingListSelect = useSelector(makeSelectWaitingList);
+  const updateTutorSelect = useSelector(makeSelectUpdateTutor);
+
+  const handleDenyTutor = data => {
+    const { userId } = data;
+    updateTutor({
+      userId,
+      isActivated: false,
+    });
   };
+
+  const handleAcceptTutor = data => {
+    const { userId } = data;
+    console.log('userId', userId);
+    updateTutor({
+      userId,
+      isActivated: true,
+    });
+  };
+
   useEffect(() => {
     getWaitingList();
-  }, [getWaitingList]);
+  }, [getWaitingList, updateTutorSelect]);
   return {
     selectors: {
-      waitingList,
+      waitingList: waitingListSelect.data,
     },
     handles: {
-      handleBlock,
+      handleDenyTutor,
+      handleAcceptTutor,
     },
   };
 };

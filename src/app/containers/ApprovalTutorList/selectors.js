@@ -7,14 +7,8 @@ export const makeSelectWaitingList = createSelector(
   selectWaitingListState,
   waitingList => get('waitingList', waitingList),
 );
-export const makeVisible = createSelector(selectWaitingListState, visible =>
-  get('visible', visible),
-);
-export const makeCurrentUser = createSelector(
+
+export const makeSelectUpdateTutor = createSelector(
   selectWaitingListState,
-  currentUser => get('currentUser', currentUser),
-);
-export const makeRate = createSelector(
-  selectWaitingListState,
-  currentUserRate => get('currentUserRate', currentUserRate),
+  waitingList => get('updateTutor', waitingList),
 );
