@@ -66,54 +66,13 @@ export const Login = memo(() => {
         </Form.Item>
         <Form.Item className="login-form-button login-form-button-local">
           <Button
-            type="primary"
+            type="accent"
             htmlType="submit"
             loading={status === ACTION_STATUS.PENDING}
           >
             {t('Login.btnLogin')}
           </Button>
         </Form.Item>
-        <GoogleLogin
-          clientId={GOOGLE_ID}
-          render={renderProps => (
-            <StyledGoogleButton
-              className="login-form-button"
-              onClick={renderProps.onClick}
-              disabled={renderProps.disabled}
-            >
-              {t('Login.btnLoginGoogle')}
-            </StyledGoogleButton>
-          )}
-          buttonText="Google Login"
-          onSuccess={receivedData =>
-            handleLoginService({
-              service: 'google',
-              data: receivedData && receivedData.accessToken,
-            })
-          }
-          cookiePolicy={'single_host_origin'}
-        />
-        <FacebookLogin
-          appId={FACEBOOK_ID}
-          fields="name,email,picture"
-          callback={receivedData =>
-            handleLoginService({
-              service: 'facebook',
-              data: receivedData && receivedData.accessToken,
-            })
-          }
-          render={renderProps => (
-            <StyledFacebookButton
-              className="login-form-button"
-              onClick={renderProps.onClick}
-            >
-              {t('Login.btnLoginFacebook')}
-            </StyledFacebookButton>
-          )}
-        />
-        <span className="login-form-register">
-          <Link to="/register"> {t('Login.linkRegister')} </Link>
-        </span>
       </Form>
     </StyledLogin>
   );
