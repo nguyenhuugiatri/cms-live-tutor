@@ -12,14 +12,23 @@ export const ApprovalTutorList = () => {
   useInjectReducer({ key: sliceKey, reducer });
   const { selectors, handles } = useHooks();
   const { waitingList } = selectors;
-  const { handleDenyTutor, handleAcceptTutor } = handles;
+  const dataTable = waitingList.map(row => {
+    const { User, ...info } = row;
+    const tutor = {
+      ...User,
+      ...info,
+    };
+    return tutor;
+  });
+  const { handleDenyTutor, handleAcceptTutor, showInfoTutor } = handles;
   return (
     <StyledLayout>
       <Title level={4}>List of User</Title>
       <Table
-        dataSource={waitingList}
+        dataSource={dataTable}
         handleDenyTutor={handleDenyTutor}
         handleAcceptTutor={handleAcceptTutor}
+        showInfoTutor={showInfoTutor}
       />
     </StyledLayout>
   );

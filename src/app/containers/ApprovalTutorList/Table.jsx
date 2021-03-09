@@ -13,6 +13,7 @@ export const MainTable = ({
   dataSource,
   handleDenyTutor,
   handleAcceptTutor,
+  showInfoTutor,
 }) => {
   const [form] = Form.useForm();
   const { EditableCell, data, search, onChange } = useTable({
@@ -20,9 +21,9 @@ export const MainTable = ({
     dataSource,
   });
   const colms = [
-    { title: 'Name', dataIndex: 'id', width: '25%', ...search('id') },
-    { title: 'Email', dataIndex: 'userId', width: '25%', ...search('userId') },
-    { title: 'video', dataIndex: 'bio', width: '15%' },
+    { title: 'Name', dataIndex: 'name', width: '25%', ...search('id') },
+    { title: 'Email', dataIndex: 'email', width: '25%', ...search('userId') },
+    { title: 'Country', dataIndex: 'country', width: '15%' },
     {
       title: 'Create At',
       dataIndex: 'createdAt',
@@ -66,7 +67,7 @@ export const MainTable = ({
               title={`Do you want to approve this user become tutor`}
               onConfirm={() => handleAcceptTutor({ ...record })}
             >
-              <Button size="small" type="primary">
+              <Button size="small" type="accent">
                 Accept
               </Button>
             </Popconfirm>
@@ -77,7 +78,11 @@ export const MainTable = ({
     {
       title: 'Action',
       render: (_, record) => (
-        <Button size="small" type="primary">
+        <Button
+          size="small"
+          type="accent"
+          onClick={() => showInfoTutor({ ...record })}
+        >
           View Detail
         </Button>
       ),
