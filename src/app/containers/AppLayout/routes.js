@@ -1,11 +1,12 @@
 import { Home } from 'app/containers/Home/Loadable';
 import { Login } from 'app/containers/Login/Loadable';
 import { Register } from 'app/containers/Register/Loadable';
+import { ApprovalTutorList } from 'app/containers/ApprovalTutorList';
 
 export const privateRoutes = [
   {
     path: '/',
-    component: Home,
+    component: ApprovalTutorList,
     key: 'home',
   },
 ];
