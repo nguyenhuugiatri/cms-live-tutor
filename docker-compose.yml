@@ -7,4 +7,4 @@ services:
       REACT_APP_WEB_API: https://api.livetutor.live
     command: sh -c "npm start"
     ports:
-      - 3000:3000
+      - 3484:3000
