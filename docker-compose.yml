@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  app:
+    image: nakfl/cms-live-tutor:latest
+    environment:
+      REACT_APP_WEB_API: https://api.livetutor.live
+    command: sh -c "npm start"
+    ports:
+      - 3000:3000
