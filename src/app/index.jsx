@@ -8,8 +8,20 @@ import 'styles/core.css';
 export const App = () => {
   return (
     <BrowserRouter>
-      <Helmet titleTemplate="%s - BSA" defaultTitle="Basic App">
-        <meta name="description" content="A React application" />
+      <Helmet titleTemplate="%s - LT" defaultTitle="Live Tutor Admin">
+        <meta
+          name="description"
+          content="CMS of Live online tutoring platform"
+        />
+        <meta property="og:url" content="https://admin.livetutor.live/" />
+        <meta
+          property="og:image"
+          content="https://admin.livetutor.live/logo192.png"
+        />
+        <meta
+          property="og:description"
+          content="CMS of Live online tutoring platform"
+        />
       </Helmet>
       <Switch>
         <Route component={AppLayout} />
