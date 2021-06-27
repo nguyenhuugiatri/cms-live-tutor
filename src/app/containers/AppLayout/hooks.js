@@ -1,7 +1,8 @@
 import { makeSelectIsAuthenticated } from 'app/containers/Login/selectors';
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
+import { privateRoutes } from './routes';
 
 export const useHooks = () => {
   const isAuthenticated = useSelector(makeSelectIsAuthenticated);
@@ -28,4 +29,20 @@ export const useAuthenticatedRedirect = () => {
   }, [isAuthenticated, history, from, isRedirect]);
 };
 
+export const useActivatedMenu = () => {
+  const location = useLocation();
+
+  const activ = useMemo(() => {
+    if (location.pathname === '/') {
+      return privateRoutes[0].key;
+    } else {
+      return privateRoutes.find(route => location.pathname.includes(route.key))
+        ?.key;
+    }
+  }, [location]);
+
+  return {
+    active: activ,
+  };
+};
 export default useHooks;

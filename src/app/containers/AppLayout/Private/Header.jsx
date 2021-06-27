@@ -4,22 +4,33 @@ import Menu from 'app/components/Menu';
 import { useLogout } from 'app/containers/Login/hooks';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { useActivatedMenu } from '../hooks';
+import { privateRoutes } from '../routes';
 import { StyledHeader } from '../styles';
 
 export const Header = () => {
   const { t } = useTranslation();
   const { handlers } = useLogout();
   const { onLogout } = handlers;
+  const { active } = useActivatedMenu();
 
   return (
     <StyledHeader>
       <div className="left">
         <div className="logo" />
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
-          <Menu.Item key="1">
-            <Link to="/">{t('Header.linkHome')}</Link>
-          </Menu.Item>
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          defaultSelectedKeys={[`${active}`]}
+        >
+          {privateRoutes.map(route => (
+            <Menu.Item key={route.key}>
+              <Link to={route.path} style={{ textTransform: 'capitalize' }}>
+                {route.key}
+              </Link>
+            </Menu.Item>
+          ))}
         </Menu>
       </div>
       <div className="right">

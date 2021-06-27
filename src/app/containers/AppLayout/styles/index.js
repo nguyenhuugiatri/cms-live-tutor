@@ -4,7 +4,7 @@ const { Content, Header, Footer } = Layout;
 
 export const StyledLayout = styled(Layout)`
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
 `;
 
 export const StyledHeader = styled(Header)`
