@@ -5,6 +5,5 @@ services:
     image: nakfl/cms-live-tutor:latest
     environment:
       REACT_APP_WEB_API: https://api.livetutor.live
-    command: sh -c "npm start"
     ports:
-      - 3484:3000
+      - 3484:80
