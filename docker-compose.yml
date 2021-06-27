@@ -4,6 +4,7 @@ services:
   app:
     image: nakfl/cms-live-tutor:latest
     environment:
+      REACT_APP_NODE_ENV: production
       REACT_APP_WEB_API: https://api.livetutor.live
     ports:
-      - 3484:80
+      - 3001:80

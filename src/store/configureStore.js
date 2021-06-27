@@ -1,7 +1,7 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { createInjectorsEnhancer, forceReducerReload } from 'redux-injectors';
 import createSagaMiddleware from 'redux-saga';
-
+import { NODE_ENV } from 'configs';
 import { createReducer } from './reducers';
 
 export const configureAppStore = initialState => {
@@ -20,7 +20,7 @@ export const configureAppStore = initialState => {
   const store = configureStore({
     reducer: createReducer(),
     middleware: [...getDefaultMiddleware(), ...middlewares],
-    devTools: process.env.NODE_ENV !== 'production',
+    devTools: NODE_ENV !== 'production',
     enhancers,
     preloadedState: initialState,
   });
