@@ -11,3 +11,7 @@ export const makeLoading = createSelector(selectTutorList, status => {
 export const makeListTutor = createSelector(selectTutorList, list =>
   get('list', list),
 );
+
+export const makeTotal = createSelector(selectTutorList, total =>
+  get('total', total),
+);

@@ -13,3 +13,7 @@ export const makeLoading = createSelector(
   selectTransaction,
   status => get('status', status) === ACTION_STATUS.PENDING,
 );
+
+export const makeTotal = createSelector(selectTransaction, total =>
+  get('total', total),
+);

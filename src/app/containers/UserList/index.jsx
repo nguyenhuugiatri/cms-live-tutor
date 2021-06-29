@@ -7,15 +7,16 @@ import Table from 'app/components/Table';
 import { Typography } from 'antd';
 import { FlexColumn } from 'app/components/FlexColumn';
 import { Pagination } from 'app/components/Pagination';
-import { usePagination, useHooks } from './hooks';
+import { useHooks } from './hooks';
 
 const { Title } = Typography;
 
 export const UserList = memo(() => {
   useInjectSaga({ key: sliceKey, saga });
   useInjectReducer({ key: sliceKey, reducer });
+  const { selectors } = useHooks();
+  const { total } = selectors;
   const tableProps = useTable();
-  const paginationProps = usePagination();
 
   return (
     <FlexColumn>
@@ -23,7 +24,7 @@ export const UserList = memo(() => {
         <Title level={2}>User list</Title>
       </div>
       <Table {...tableProps}></Table>
-      <Pagination {...paginationProps} />
+      <Pagination total={total} />
     </FlexColumn>
   );
 });

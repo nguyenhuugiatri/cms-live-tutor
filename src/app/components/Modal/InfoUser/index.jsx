@@ -28,6 +28,8 @@ import { useInjectSaga, useInjectReducer } from 'utils/reduxInjectors';
 import saga from './saga';
 import useHooks from './hooks';
 import { Typography } from 'antd';
+import LANGUAGES from 'utils/languages';
+import { MAJOR_NAMES } from 'utils/major';
 const { Title } = Typography;
 
 const TutorModal = memo(props => {
@@ -46,6 +48,7 @@ const TutorModal = memo(props => {
     resume,
     specialties,
     video,
+    interests,
   } = tutor;
 
   return (
@@ -118,27 +121,23 @@ const TutorModal = memo(props => {
                 <Title level={5}>Languages</Title>
               </Row>
               <Row className="mb-1">
-                {languages.map(content => (
-                  <TextHighlight content={content} />
+                {languages.split(',').map(content => (
+                  <TextHighlight content={LANGUAGES[content]} />
                 ))}
               </Row>
               <Row>
                 <Title level={5}>Specialties</Title>
               </Row>
               <Row className="mb-1">
-                {specialties.map(content => (
-                  <TextHighlight content={content} />
+                {specialties.split(',').map(content => (
+                  <TextHighlight content={MAJOR_NAMES[content]?.englishName} />
                 ))}
               </Row>
               <Row>
                 <Title level={5}>Interests</Title>
               </Row>
               <Row>
-                <Title level={5}>
-                  I have traveled a major part of the USA and parts of Eastern
-                  Europe, Russia, the Philippines, and Chile. I now live in a
-                  small town in South Carolina in the USA
-                </Title>
+                <Title level={5}>{interests}</Title>
               </Row>
             </Row>
             <hr></hr>
@@ -152,7 +151,7 @@ const TutorModal = memo(props => {
               </Row>
             </Row>
             <hr></hr>
-            <Row className="intro-schedule flex-column">
+            {/* <Row className="intro-schedule flex-column">
               <Title level={4}>Schedule</Title>
               <Row>
                 {isSelectDate && <Title level={5}>Select time a slot</Title>}
@@ -188,7 +187,7 @@ const TutorModal = memo(props => {
                   </Row>
                 )}
               </Row>
-            </Row>
+            </Row> */}
           </StyledTutorContent>
         </Form>
       </StyledProfile>

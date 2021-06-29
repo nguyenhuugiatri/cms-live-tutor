@@ -10,7 +10,7 @@ import { makeUserList, makeLoading, makeTotal } from './selectors';
 import { actions } from './slice';
 import { StyledFlexLayout } from './styles';
 import Popconfirm from 'app/components/Popconfirm';
-import { useHooks } from './hooks';
+import moment from 'moment';
 
 export const useTable = () => {
   const userList = useSelector(makeUserList);
@@ -32,9 +32,11 @@ export const useTable = () => {
   }, [location.search, manageActivated]);
 
   const dataSource = userList.map(user => ({
+    ...user,
     key: user.id,
     role: user?.Roles[0].name,
-    ...user,
+    birthday: moment(user?.birthday).format('YYYY/MM/DD'),
+    walletAmount: user?.walletInfo?.amount,
   }));
 
   const columns = useMemo(() => {
@@ -43,19 +45,21 @@ export const useTable = () => {
         title: 'Email',
         dataIndex: 'email',
         key: 'email',
-        width: '15%',
       },
       {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        width: '15%',
+      },
+      {
+        title: 'Wallet Amount',
+        dataIndex: 'walletAmount',
+        key: 'wallet',
       },
       {
         title: 'Country',
         dataIndex: 'country',
         key: 'country',
-        width: '15%',
       },
       {
         title: 'Birthday',
@@ -84,6 +88,7 @@ export const useTable = () => {
       {
         title: 'Action',
         key: 'action',
+        width: '100px',
         render: (_, record) => (
           <StyledFlexLayout>
             {record.isActivated ? (
