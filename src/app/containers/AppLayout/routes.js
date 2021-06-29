@@ -3,6 +3,9 @@ import { Login } from 'app/containers/Login/Loadable';
 import { Register } from 'app/containers/Register/Loadable';
 import { TutorList } from 'app/containers/TutorList/Loadable';
 import { UserList } from 'app/containers/UserList/Loadable';
+import { Transaction } from 'app/containers/Transaction/Loadable';
+import { Report } from 'app/containers/Report/Loadable';
+import { Fee } from 'app/containers/Fee/Loadable';
 import { ApprovalTutorList } from 'app/containers/ApprovalTutorList';
 
 export const privateRoutes = [
@@ -20,6 +23,21 @@ export const privateRoutes = [
     path: '/users',
     component: UserList,
     key: 'user',
+  },
+  {
+    path: '/transactions',
+    component: Transaction,
+    key: 'transaction',
+  },
+  {
+    path: '/reports',
+    component: Report,
+    key: 'report',
+  },
+  {
+    path: '/fees',
+    component: Fee,
+    key: 'fee',
   },
 ];
 

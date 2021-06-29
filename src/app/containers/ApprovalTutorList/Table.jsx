@@ -27,7 +27,6 @@ export const MainTable = ({
     {
       title: 'Create At',
       dataIndex: 'createdAt',
-      width: '15%',
       render: (_, record) => {
         return moment(record?.createdAt).format('DD/MM/YYYY hh:mm:ss');
       },
@@ -35,7 +34,6 @@ export const MainTable = ({
     {
       title: 'Activated',
       dataIndex: 'isActivated',
-      width: '15%',
       render: (_, record) => {
         return (
           <Status
@@ -50,7 +48,6 @@ export const MainTable = ({
     },
     {
       title: 'Blocked',
-      width: '10%',
       dataIndex: 'isBlocked',
       render: (_, record) => {
         return (
@@ -77,6 +74,7 @@ export const MainTable = ({
     },
     {
       title: 'Action',
+      width: '150px',
       render: (_, record) => (
         <Button
           size="small"
@@ -99,7 +97,6 @@ export const MainTable = ({
         dataSource={data}
         columns={colms}
         size="small"
-        pagination={{ pageSize: 11, position: ['topRight'] }}
         bordered
         onChange={onChange}
       />

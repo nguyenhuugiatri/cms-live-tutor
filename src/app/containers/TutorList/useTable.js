@@ -1,20 +1,27 @@
 import ListTag from 'app/components/ListTag';
 import useActions from 'hooks/useActions';
 import Tag from 'app/components/Tag';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { makeListTutor, makeLoading } from './selector';
 import { actions } from './slice';
 import { StyledFlexLayout } from './styles';
+import { useLocation } from 'react-router-dom';
+import qs from 'query-string';
+import Button from 'app/components/Button';
+import { actions as popupActions } from 'app/containers/Popup/slice';
+import { POPUP_TYPE } from '../Popup/constants';
 
 export const useTable = () => {
   const listTutor = useSelector(makeListTutor);
   const loading = useSelector(makeLoading);
+  const location = useLocation();
   const { getList } = useActions({ getList: actions.getList }, [actions]);
 
   useEffect(() => {
-    getList();
-  }, []);
+    const { page, perPage } = qs.parse(location.search);
+    getList({ page, perPage });
+  }, [location.search]);
 
   const dataSource = useMemo(() => {
     return listTutor.map(tutor => ({
@@ -22,6 +29,20 @@ export const useTable = () => {
       ...tutor,
     }));
   }, [listTutor]);
+  const { openPopup } = useActions({ openPopup: popupActions.openPopup }, [
+    popupActions,
+  ]);
+
+  const showInfoTutor = useCallback(
+    tutor => {
+      openPopup({
+        key: 'showInfoTutor',
+        type: POPUP_TYPE.INFO_TUTOR,
+        tutor,
+      });
+    },
+    [openPopup],
+  );
 
   const columns = useMemo(() => {
     return [
@@ -73,7 +94,17 @@ export const useTable = () => {
         key: 'action',
         width: '10%',
         render: (_, record) => {
-          return <StyledFlexLayout></StyledFlexLayout>;
+          return (
+            <StyledFlexLayout>
+              <Button
+                onClick={() => {
+                  showInfoTutor(record);
+                }}
+              >
+                View Detail
+              </Button>
+            </StyledFlexLayout>
+          );
         },
       },
     ];

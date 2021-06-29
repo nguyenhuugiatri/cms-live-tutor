@@ -5,26 +5,27 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {
   status: '',
-  transactionList: [],
+  error: null,
   total: 0,
+  reportList: [],
 };
 
-const transactionSlice = createSlice({
-  name: 'transaction',
+const reportSlice = createSlice({
+  name: 'report',
   initialState: initialState,
   reducers: {
-    getTransactionList(state) {
+    getReport(state) {
       return flow(set('status', ACTION_STATUS.PENDING))(state);
     },
-    getTransactionListSuccess(state, action) {
+    getReportSuccess(state, action) {
       const { rows, count } = action.payload;
       return flow(
-        set('status', ACTION_STATUS.SUCCESS),
+        set('reportList', rows),
         set('total', count),
-        set('transactionList', rows),
+        set('status', ACTION_STATUS.SUCCESS),
       )(state);
     },
   },
 });
 
-export const { actions, reducer, name: sliceKey } = transactionSlice;
+export const { actions, reducer, name: sliceKey } = reportSlice;
