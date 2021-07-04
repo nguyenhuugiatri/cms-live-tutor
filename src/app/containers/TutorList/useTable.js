@@ -1,27 +1,28 @@
 import ListTag from 'app/components/ListTag';
 import useActions from 'hooks/useActions';
 import Tag from 'app/components/Tag';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { makeListTutor, makeLoading } from './selector';
+import { makeListTutor, makeLoading, makeLoadingAction } from './selector';
 import { actions } from './slice';
 import { StyledFlexLayout } from './styles';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import qs from 'query-string';
 import Button from 'app/components/Button';
-import { actions as popupActions } from 'app/containers/Popup/slice';
-import { POPUP_TYPE } from '../Popup/constants';
+import Dropdown from 'app/components/Dropdown';
+import { ActionMenu } from './ActionMenu';
 
 export const useTable = () => {
+  const [requestRender, setRequest] = useState(false);
+  const history = useHistory();
   const listTutor = useSelector(makeListTutor);
   const loading = useSelector(makeLoading);
+  const { deny, accept } = useSelector(makeLoadingAction);
   const location = useLocation();
-  const { getList } = useActions({ getList: actions.getList }, [actions]);
-
-  useEffect(() => {
-    const { page, perPage } = qs.parse(location.search);
-    getList({ page, perPage });
-  }, [location.search]);
+  const { getList, approvalTutor } = useActions(
+    { getList: actions.getList, approvalTutor: actions.approvalTutor },
+    [actions],
+  );
 
   const dataSource = useMemo(() => {
     return listTutor.map(tutor => ({
@@ -29,20 +30,33 @@ export const useTable = () => {
       ...tutor,
     }));
   }, [listTutor]);
-  const { openPopup } = useActions({ openPopup: popupActions.openPopup }, [
-    popupActions,
-  ]);
 
   const showInfoTutor = useCallback(
     tutor => {
-      openPopup({
-        key: 'showInfoTutor',
-        type: POPUP_TYPE.INFO_TUTOR,
-        tutor,
-      });
+      history.push(`/tutors/${tutor.userId}`);
     },
-    [openPopup],
+    [history],
   );
+
+  const onDeny = useCallback(
+    ({ userId }) => {
+      approvalTutor({ id: userId, approval: false });
+      setRequest(!requestRender);
+    },
+    [approvalTutor, requestRender],
+  );
+  const onAccept = useCallback(
+    ({ userId }) => {
+      approvalTutor({ id: userId, approval: true });
+      setRequest(!requestRender);
+    },
+    [approvalTutor, requestRender],
+  );
+
+  useEffect(() => {
+    const { page, perPage } = qs.parse(location.search);
+    getList({ page, perPage });
+  }, [getList, location.search, requestRender]);
 
   const columns = useMemo(() => {
     return [
@@ -50,29 +64,44 @@ export const useTable = () => {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        width: '100px',
+        // width: '100px',
       },
       {
         title: 'Bio',
         dataIndex: 'bio',
         key: 'bio',
-        width: '15%',
+        // width: '15%',
       },
       {
         title: 'Education',
         dataIndex: 'education',
         key: 'education',
+        // width: '15%',
       },
       {
         title: 'Interests',
         dataIndex: 'interests',
         key: 'interests',
+        // width: '20%',
+      },
+      {
+        title: 'Price',
+        dataIndex: 'price',
+        key: 'price',
+        // width: '100px',
+        render: text => (
+          <span>
+            {new Intl.NumberFormat('vi-VN', {
+              style: 'currency',
+              currency: 'VND',
+            }).format(text)}
+          </span>
+        ),
       },
       {
         title: 'Target Student',
         dataIndex: 'targetStudent',
         key: 'targetStudent',
-        width: '250px',
         render: text => {
           return <ListTag tags={text.split(' ')} />;
         },
@@ -81,7 +110,6 @@ export const useTable = () => {
         title: 'Status',
         dataIndex: 'isActivated',
         key: 'isActivated',
-        width: '100px',
         render: item => {
           let color = item === true ? '#87d068' : '#f50';
           return (
@@ -92,26 +120,56 @@ export const useTable = () => {
       {
         title: 'Action',
         key: 'action',
-        width: '10%',
+        align: 'center',
         render: (_, record) => {
           return (
             <StyledFlexLayout>
-              <Button
-                onClick={() => {
-                  showInfoTutor(record);
-                }}
-              >
-                View Detail
-              </Button>
+              {record?.isActivated ? (
+                <Button
+                  onClick={() => {
+                    showInfoTutor(record);
+                  }}
+                  style={{ marginRight: '5px' }}
+                  type="primary"
+                >
+                  View Detail
+                </Button>
+              ) : (
+                <>
+                  <Button
+                    onClick={() => {
+                      showInfoTutor(record);
+                    }}
+                    style={{ marginRight: '5px' }}
+                    type="primary"
+                  >
+                    View Detail
+                  </Button>
+                  <Dropdown
+                    overlay={ActionMenu({
+                      onDeny: () => onDeny(record),
+                      onAccept: () => onAccept(record),
+                    })}
+                    placement="bottomRight"
+                    trigger={['click']}
+                  >
+                    <Button className="ml-2">More</Button>
+                  </Dropdown>
+                </>
+              )}
             </StyledFlexLayout>
           );
         },
       },
     ];
-  }, []);
+  }, [showInfoTutor]);
+
   return {
     dataSource,
     columns,
     loading,
+    size: 'small',
+    tableLayout: 'fixed',
+    bordered: true,
   };
 };

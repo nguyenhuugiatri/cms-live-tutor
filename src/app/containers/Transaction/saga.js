@@ -12,7 +12,6 @@ function* getListTransactionTask(action) {
     action.payload || { page: 1, perPage: 20 },
   );
   if (response) {
-    console.log(response);
     yield put(actions.getTransactionListSuccess(response));
   } else {
     console.log({ error });

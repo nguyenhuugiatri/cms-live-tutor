@@ -24,13 +24,17 @@ export const Header = () => {
           mode="horizontal"
           defaultSelectedKeys={[`${active}`]}
         >
-          {privateRoutes.map(route => (
-            <Menu.Item key={route.key}>
-              <Link to={route.path} style={{ textTransform: 'capitalize' }}>
-                {route.key}
-              </Link>
-            </Menu.Item>
-          ))}
+          {privateRoutes.map(route =>
+            route?.showInHeader ? (
+              <Menu.Item key={route.key}>
+                <Link to={route.path} style={{ textTransform: 'capitalize' }}>
+                  {route.key}
+                </Link>
+              </Menu.Item>
+            ) : (
+              <></>
+            ),
+          )}
         </Menu>
       </div>
       <div className="right">

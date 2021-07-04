@@ -9,6 +9,10 @@ export const initialState = {
   total: 0,
   status: '',
   error: null,
+  actionStatus: {
+    accept: '',
+    deny: '',
+  },
 };
 
 const tutorList = createSlice({
@@ -27,6 +31,25 @@ const tutorList = createSlice({
         set('list', rows),
         set('total', count),
         set('status', ACTION_STATUS.SUCCESS),
+      )(state);
+    },
+    approvalTutor(state, action) {
+      const { approval } = action.payload;
+      const status = approval ? 'accept' : 'deny';
+
+      return flow(set(`actionStatus.${status}`, ACTION_STATUS.PENDING))(state);
+    },
+    approvalTutorSuccess(state, action) {
+      const { approval } = action.payload;
+      const status = approval ? 'accept' : 'deny';
+      return flow(set(`actionStatus.${status}`, ACTION_STATUS.SUCCESS))(state);
+    },
+    approvalTutorFailed(state, action) {
+      const { approval, error } = action.payload;
+      const status = approval ? 'accept' : 'deny';
+      return flow(
+        set('error', error),
+        set(`actionStatus.${status}`, ACTION_STATUS.FAILED),
       )(state);
     },
   },

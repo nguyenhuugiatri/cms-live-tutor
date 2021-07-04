@@ -15,3 +15,10 @@ export const makeListTutor = createSelector(selectTutorList, list =>
 export const makeTotal = createSelector(selectTutorList, total =>
   get('total', total),
 );
+
+export const makeLoadingAction = createSelector(selectTutorList, state => {
+  return {
+    deny: get('actionStatus.deny', state) === ACTION_STATUS.PENDING,
+    accept: get('actionStatus.accept', state) === ACTION_STATUS.PENDING,
+  };
+});
