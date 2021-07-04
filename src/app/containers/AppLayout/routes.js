@@ -6,38 +6,50 @@ import { UserList } from 'app/containers/UserList/Loadable';
 import { Transaction } from 'app/containers/Transaction/Loadable';
 import { Report } from 'app/containers/Report/Loadable';
 import { Fee } from 'app/containers/Fee/Loadable';
-import { ApprovalTutorList } from 'app/containers/ApprovalTutorList';
+import { TutorDetail } from 'app/containers/TutorDetail';
 
 export const privateRoutes = [
   {
     path: '/',
-    component: ApprovalTutorList,
+    component: Home,
     key: 'home',
+    showInHeader: true,
   },
   {
     path: '/tutors',
     component: TutorList,
     key: 'tutor',
+    showInHeader: true,
+  },
+  {
+    path: '/tutors/:id',
+    component: TutorDetail,
+    key: 'tutorDetail',
+    showInHeader: false,
   },
   {
     path: '/users',
     component: UserList,
     key: 'user',
+    showInHeader: true,
   },
   {
     path: '/transactions',
     component: Transaction,
     key: 'transaction',
+    showInHeader: true,
   },
   {
     path: '/reports',
     component: Report,
     key: 'report',
+    showInHeader: true,
   },
   {
     path: '/fees',
     component: Fee,
     key: 'fee',
+    showInHeader: true,
   },
 ];
 

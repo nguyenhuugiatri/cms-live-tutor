@@ -30,7 +30,6 @@ const userList = createSlice({
     },
     manageActivatedSuccess(state, action) {
       const { id, isActivated } = action.payload;
-      console.log(id, isActivated);
       const list = [...state.list].map(user => {
         if (user.id === id) {
           return {

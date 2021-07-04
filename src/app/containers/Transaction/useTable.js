@@ -16,7 +16,6 @@ export const useTable = () => {
 
   useEffect(() => {
     const { page, perPage } = qs.parse(location.search);
-    console.log({ page, perPage });
 
     getTransactionList({ page, perPage });
   }, [getTransactionList, location.search]);

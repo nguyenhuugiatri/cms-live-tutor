@@ -42,7 +42,6 @@ export const useHooks = () => {
 
   const handleAcceptTutor = data => {
     const { userId } = data;
-    console.log('userId', userId);
     updateTutor({
       userId,
       isActivated: true,

@@ -12,7 +12,6 @@ function* updateTutorWatcher() {
 
 function* updateTutorTask(action) {
   const { response, error } = yield call(updateTutorAPI, action.payload);
-  console.log('response', response);
   if (response) {
     yield put(actions.updateTutorSuccess(response));
   } else {
@@ -22,7 +21,6 @@ function* updateTutorTask(action) {
 
 function* getListWaitingTask() {
   const { response, error } = yield call(getListWaitingAPI);
-  console.log('response', response);
   if (response) {
     yield put(actions.getWaitingListSuccess(response));
   } else {

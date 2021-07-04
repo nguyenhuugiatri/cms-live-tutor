@@ -17,7 +17,9 @@ export const updateTutor = payload => {
     method: 'PUT',
     data: payload,
   })
-    .then(response => response.data)
+    .then(response => {
+      return response.data;
+    })
     .then(({ data }) => ({ response: data }))
     .catch(handleGeneralError);
 };
@@ -25,6 +27,16 @@ export const updateTutor = payload => {
 export const getListTutor = ({ page = 1, perPage = 10 }) => {
   return request(WEB_API, {
     url: `tutor/all?page=${page}&perPage=${perPage}`,
+    method: 'GET',
+  })
+    .then(response => response)
+    .then(({ data }) => ({ response: data }))
+    .catch(handleGeneralError);
+};
+
+export const getTutorDetail = payload => {
+  return request(WEB_API, {
+    url: `tutor/detail/${payload}`,
     method: 'GET',
   })
     .then(response => response)

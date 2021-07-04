@@ -11,7 +11,6 @@ export const usePagination = ({ total = 0 }) => {
   }, [location.search]);
 
   const onChange = page => {
-    console.log(page);
     history.push({
       search: `?page=${page}`,
     });
