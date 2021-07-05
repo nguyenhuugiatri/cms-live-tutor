@@ -19,7 +19,7 @@ import COUNTRIES from 'utils/countries';
 import { ACTION_STATUS } from 'utils/constants';
 import { MAJOR_NAMES } from 'utils/major';
 import LANGUAGES from 'utils/languages';
-import Button from 'app/components/Button';
+import ConfirmButton from 'app/components/ConfirmButton';
 
 const { Title } = Typography;
 
@@ -29,8 +29,8 @@ export const TutorDetail = ({ ...rest }) => {
   const { handlers, selectors } = useHooks();
   const { t } = useTranslation();
 
-  const { tutorDetail, user, form, getTutorDetailStatus } = selectors;
-
+  const { tutorDetail, getTutorDetailStatus } = selectors;
+  const { onDeny, onApproval } = handlers;
   const userInfo = tutorDetail.User ?? {};
 
   const { avatar, country, name } = userInfo;
@@ -124,12 +124,23 @@ export const TutorDetail = ({ ...rest }) => {
                         </Row>
                       </Col>
                       <Col>
-                        <div className="d-flex">
-                          <Button style={{ marginRight: '5px' }}>
-                            {t('Profile.showReview')}
-                          </Button>
-                          <Button>{t('Profile.showReview')}</Button>
-                        </div>
+                        {!tutorDetail?.isActivated && (
+                          <div className="d-flex">
+                            <ConfirmButton
+                              title="Are you sure deny this user?"
+                              onConfirm={onDeny}
+                              text="Deny"
+                              type="primary"
+                              style={{ marginRight: '8px' }}
+                            />
+                            <ConfirmButton
+                              title="Are you sure approval this user?"
+                              onConfirm={onApproval}
+                              text="Approve"
+                              type="accent"
+                            />
+                          </div>
+                        )}
                       </Col>
                     </>
                   )}
