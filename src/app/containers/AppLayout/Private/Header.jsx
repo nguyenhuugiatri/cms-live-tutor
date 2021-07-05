@@ -4,7 +4,7 @@ import Menu from 'app/components/Menu';
 import { useLogout } from 'app/containers/Login/hooks';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useActivatedMenu } from '../hooks';
 import { privateRoutes } from '../routes';
 import { StyledHeader } from '../styles';

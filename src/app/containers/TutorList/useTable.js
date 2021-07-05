@@ -3,7 +3,7 @@ import useActions from 'hooks/useActions';
 import Tag from 'app/components/Tag';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { makeListTutor, makeLoading, makeLoadingAction } from './selector';
+import { makeListTutor, makeLoading } from './selector';
 import { actions } from './slice';
 import { StyledFlexLayout } from './styles';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -17,7 +17,6 @@ export const useTable = () => {
   const history = useHistory();
   const listTutor = useSelector(makeListTutor);
   const loading = useSelector(makeLoading);
-  const { deny, accept } = useSelector(makeLoadingAction);
   const location = useLocation();
   const { getList, approvalTutor } = useActions(
     { getList: actions.getList, approvalTutor: actions.approvalTutor },
@@ -162,7 +161,7 @@ export const useTable = () => {
         },
       },
     ];
-  }, [showInfoTutor]);
+  }, [onAccept, onDeny, showInfoTutor]);
 
   return {
     dataSource,

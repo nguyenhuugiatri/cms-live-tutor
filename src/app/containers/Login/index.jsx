@@ -3,23 +3,16 @@ import Button from 'app/components/Button';
 import Form from 'app/components/Form';
 import Input from 'app/components/Input';
 import Title from 'app/components/Title';
-import { FACEBOOK_ID, GOOGLE_ID } from 'configs';
 import React, { memo } from 'react';
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-import GoogleLogin from 'react-google-login';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { ACTION_STATUS } from 'utils/constants';
 import useHooks from './hooks';
-import {
-  StyledFacebookButton,
-  StyledGoogleButton,
-  StyledLogin,
-} from './styles';
+import { StyledLogin } from './styles';
 
 export const Login = memo(() => {
   const { handlers, selectors } = useHooks();
-  const { onFinish, onFinishFailed, handleLoginService } = handlers;
+  const { onFinish, onFinishFailed } = handlers;
   const { status } = selectors;
   const { t } = useTranslation();
 

@@ -7,6 +7,10 @@ const initialState = {
   data: {},
   status: '',
   error: null,
+  actionStatus: {
+    accept: '',
+    deny: '',
+  },
 };
 
 const tutorDetailSlice = createSlice({
@@ -19,7 +23,6 @@ const tutorDetailSlice = createSlice({
         set('status', ACTION_STATUS.PENDING),
       )(state);
     },
-
     getTutorDetailSuccess(state, action) {
       const { tutor, ...rest } = action.payload;
       return flow(
@@ -27,11 +30,30 @@ const tutorDetailSlice = createSlice({
         set('status', ACTION_STATUS.SUCCESS),
       )(state);
     },
-
     getTutorDetailFailed(state, action) {
       return flow(
         set('error', action.payload),
         set('status', ACTION_STATUS.FAILED),
+      )(state);
+    },
+
+    approvalTutor(state, action) {
+      const { approval } = action.payload;
+      const status = approval ? 'accept' : 'deny';
+
+      return flow(set(`actionStatus.${status}`, ACTION_STATUS.PENDING))(state);
+    },
+    approvalTutorSuccess(state, action) {
+      const { approval } = action.payload;
+      const status = approval ? 'accept' : 'deny';
+      return flow(set(`actionStatus.${status}`, ACTION_STATUS.SUCCESS))(state);
+    },
+    approvalTutorFailed(state, action) {
+      const { approval, error } = action.payload;
+      const status = approval ? 'accept' : 'deny';
+      return flow(
+        set('error', error),
+        set(`actionStatus.${status}`, ACTION_STATUS.FAILED),
       )(state);
     },
   },

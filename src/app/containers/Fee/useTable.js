@@ -18,7 +18,7 @@ export const useTable = () => {
 
   useEffect(() => {
     getFeeList();
-  }, []);
+  }, [getFeeList]);
 
   const edit = record => {
     form.setFieldsValue({

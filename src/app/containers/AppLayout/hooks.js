@@ -1,5 +1,5 @@
 import { makeSelectIsAuthenticated } from 'app/containers/Login/selectors';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { privateRoutes } from './routes';

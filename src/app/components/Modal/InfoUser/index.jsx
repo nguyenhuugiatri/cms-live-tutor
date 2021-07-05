@@ -5,28 +5,17 @@ import {
   StyledTutorTitle,
   StyledAvatar,
   StyledTutorContent,
-  StyledGroupIconRight,
   StyledGroupIcon,
 } from '../styles';
-import Button from 'app/components/Button';
 import TextHighlight from 'app/components/TextHighlight';
-import TimeSelect from 'app/components/TimeSelect';
 import Form from 'app/components/Form';
-import {
-  CloseOutlined,
-  HeartOutlined,
-  DashOutlined,
-  MailOutlined,
-  ArrowLeftOutlined,
-} from '@ant-design/icons';
+import { CloseOutlined } from '@ant-design/icons';
 import Image from 'app/components/Image';
 import Rate from 'app/components/Rate';
-import { Row, Col, Avatar, DatePicker, Calendar } from 'antd';
-import moment from 'moment';
+import { Row, Col, Avatar } from 'antd';
 import { sliceKey, reducer } from './slice';
 import { useInjectSaga, useInjectReducer } from 'utils/reduxInjectors';
 import saga from './saga';
-import useHooks from './hooks';
 import { Typography } from 'antd';
 import LANGUAGES from 'utils/languages';
 import { MAJOR_NAMES } from 'utils/major';
@@ -35,9 +24,6 @@ const { Title } = Typography;
 const TutorModal = memo(props => {
   useInjectSaga({ key: sliceKey, saga });
   useInjectReducer({ key: sliceKey, reducer });
-  const { handlers, selectors } = useHooks(props);
-  const { onSelectDate, handleBackSelectDate } = handlers;
-  const { isSelectDate } = selectors;
   const { visible, onCancel, tutor, ...rest } = props;
   const {
     avatar,

@@ -1,6 +1,6 @@
 import Tag from 'app/components/Tag';
 import useActions from 'hooks/useActions';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { makeTransactionList } from './selectors';
 import { actions } from './slice';
