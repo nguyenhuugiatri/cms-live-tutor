@@ -6,6 +6,7 @@ import { makeTransactionList } from './selectors';
 import { actions } from './slice';
 import qs from 'query-string';
 import { useLocation } from 'react-router-dom';
+import TypeTag from './TypeTag';
 export const useTable = () => {
   const transactionList = useSelector(makeTransactionList);
   const location = useLocation();
@@ -45,11 +46,14 @@ export const useTable = () => {
       title: 'Type',
       dataIndex: 'type',
       key: 'type',
+      align: 'center',
+      render: item => <TypeTag text={item} />,
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
+      align: 'center',
       render: item =>
         item === 'success' ? (
           <Tag color="green">Success</Tag>
@@ -61,6 +65,15 @@ export const useTable = () => {
       title: 'Price (VND)',
       dataIndex: 'price',
       key: 'price',
+      align: 'center',
+      render: text => (
+        <span>
+          {new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+          }).format(text)}
+        </span>
+      ),
     },
   ];
   return {

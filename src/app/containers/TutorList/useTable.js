@@ -101,14 +101,20 @@ export const useTable = () => {
         title: 'Target Student',
         dataIndex: 'targetStudent',
         key: 'targetStudent',
+        align: 'center',
         render: text => {
-          return <ListTag tags={text.split(' ')} />;
+          return (
+            <div className="d-flex justify-content-center">
+              <ListTag tags={text.split(' ')} />
+            </div>
+          );
         },
       },
       {
         title: 'Status',
         dataIndex: 'isActivated',
         key: 'isActivated',
+        align: 'center',
         render: item => {
           let color = item === true ? '#87d068' : '#f50';
           return (

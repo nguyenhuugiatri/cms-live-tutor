@@ -35,7 +35,9 @@ export const useTable = () => {
     ...user,
     key: user.id,
     role: user?.Roles[0].name,
-    birthday: moment(user?.birthday).format('YYYY/MM/DD'),
+    birthday: user?.birthday
+      ? moment(user?.birthday).format('YYYY/MM/DD')
+      : '---------',
     walletAmount: user?.walletInfo?.amount,
   }));
 
@@ -55,6 +57,14 @@ export const useTable = () => {
         title: 'Wallet Amount',
         dataIndex: 'walletAmount',
         key: 'wallet',
+        render: text => (
+          <span>
+            {new Intl.NumberFormat('vi-VN', {
+              style: 'currency',
+              currency: 'VND',
+            }).format(text)}
+          </span>
+        ),
       },
       {
         title: 'Country',
@@ -70,6 +80,7 @@ export const useTable = () => {
         title: 'Role',
         dataIndex: 'role',
         key: 'role',
+        align: 'center',
         width: '100px',
         render: item => <Tag>{item}</Tag>,
       },
@@ -78,6 +89,7 @@ export const useTable = () => {
         dataIndex: 'isActivated',
         key: 'isActivated',
         width: '120px',
+        align: 'center',
         render: item => {
           let color = item === true ? '#87d068' : '#f50';
           return (

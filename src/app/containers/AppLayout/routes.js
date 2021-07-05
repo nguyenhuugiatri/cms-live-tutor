@@ -1,4 +1,3 @@
-import { Home } from 'app/containers/Home/Loadable';
 import { Login } from 'app/containers/Login/Loadable';
 import { Register } from 'app/containers/Register/Loadable';
 import { TutorList } from 'app/containers/TutorList/Loadable';
@@ -11,9 +10,9 @@ import { TutorDetail } from 'app/containers/TutorDetail';
 export const privateRoutes = [
   {
     path: '/',
-    component: Home,
+    component: TutorList,
     key: 'home',
-    showInHeader: true,
+    showInHeader: false,
   },
   {
     path: '/tutors',
